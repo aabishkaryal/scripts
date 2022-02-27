@@ -16,8 +16,9 @@ class TestSolution(unittest.TestCase):
         for test in self.tests:
             solution = Solution()
             with self.subTest(name=test["name"]):
+                inputs = test["inputs"]
                 self.assertEqual(solution.$method(
-                    test["inputs"]), test["expected"])
+                    *inputs), test["expected"])
 
 
 if __name__ == "__main__":
