@@ -1,0 +1,9 @@
+"""Solution to $link"""
+
+
+class Solution:
+    """Solution"""
+
+    def $method(self, column_title: str) -> int:
+        """$description"""
+        

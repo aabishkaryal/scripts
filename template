@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""Create new templates for different projects"""
+
+import os
+import typer
+
+app = typer.Typer()
+
+
+@app.command()
+def leetcode(problem_number: str =
+             typer.Option(None, "--problem-number",
+                          "-n", prompt="Problem Number"),
+             leetcode_link: str =
+             typer.Option(None, "--link", "-l", prompt="Leetcode Link"),
+             method_name: str =
+             typer.Option(None, "--method", "-m", prompt="Method name"),
+             problem_description: str =
+             typer.Option(None, "--description", "-d", prompt="Problem Description")):
+    """Generate new template for leetcode practices"""
+
+    # Exit if the directory already exists
+    if os.path.isdir(problem_number):
+        typer.echo(f"Template for {problem_number} already exists.")
+        raise typer.Exit(code=1)
+    os.mkdir(problem_number)
+    # Grt absolutile filepath to template files
+    file_dir = os.path.dirname(__file__)
+    solution_template_file_path = os.path.join(
+        file_dir, "templates/leetcode/solution.template.txt")
+    test_solution_template_file_path = os.path.join(
+        file_dir, "templates/leetcode/test_solution.template.txt")
+
+    # Read template file path contents
+    with open(solution_template_file_path, "r",
+              encoding="utf8") as solution_template_file:
+        solution_template = solution_template_file.read().replace(
+            "$link", leetcode_link).replace(
+                "$description", problem_description).replace(
+                    "$method", method_name)
+
+    with open(test_solution_template_file_path, "r",
+              encoding="utf8") as test_solution_template_file:
+        test_solution_template = test_solution_template_file.read().replace(
+            "$link", leetcode_link).replace(
+                "$description", problem_description).replace(
+                    "$method", method_name)
+
+    # Prepare to write content to files
+    template_dir = os.path.join(os.getcwd(), problem_number)
+    solution_file = os.path.join(template_dir, "solution.py")
+    test_solution_file = os.path.join(template_dir, "test_solution.py")
+
+    with open(solution_file, "w", encoding="utf8") as solution:
+        solution.write(solution_template)
+
+    with open(test_solution_file, "w", encoding="utf8") as test_solution:
+        test_solution.write(test_solution_template)
+
+    typer.echo("Created successfully")
+
+
+@app.command()
+def hello():
+    """Show hello message"""
+    print("Hello")
+
+
+if __name__ == "__main__":
+    app()

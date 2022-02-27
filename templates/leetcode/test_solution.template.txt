@@ -1,0 +1,24 @@
+"""Tests for $link"""
+
+import unittest
+from solution import Solution
+
+
+class TestSolution(unittest.TestCase):
+    """Tests"""
+
+    tests = [
+        {"name": "test1", "inputs": [], "expected": },
+    ]
+
+    def test_solution(self):
+        """Test Solution"""
+        for test in self.tests:
+            solution = Solution()
+            with self.subTest(name=test["name"]):
+                self.assertEqual(solution.$method(
+                    test["inputs"]), test["expected"])
+
+
+if __name__ == "__main__":
+    unittest.main()
