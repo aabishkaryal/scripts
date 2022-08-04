@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+currentBranch=$(git branch --show-current)
+for remote in $(git remote)
+do
+    printf "git push $remote $currentBranch \n"
+    git push $remote $currentBranch
+    printf "\n"
+done
