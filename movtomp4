@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+for f in *.MOV; 
+do 
+    echo "Converting $f"
+
+    # This is the faster option since it just copies the streams and doesn't re-encode
+    # However it doesn't work for all videos
+    ffmpeg -i "$f" -c copy -f mp4 "${f%.MOV}.mp4" -hide_banner -stats -log_level panic;
+    # This is the slower option since it re-encodes the video
+    # ffmpeg -i "$f" -vcodec h264 -acodec mp3 -f mp4 "${f%.MOV}.mp4" -hide_banner -stats -log_level panic;
+    rm $f
+    echo
+done
